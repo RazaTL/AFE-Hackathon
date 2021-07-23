@@ -171,7 +171,7 @@ Game.prototype.populateMap = function() {
        let tileType = this.tileTypes[tileCode];
       
        // call the helper function
-       let tile = this.createEl_player(x,y,tileType,'tuhree.png');
+       let tile = this.createEl_player(x,y,tileType,'images/tuhree.png');
        
        // add to layer
        tiles.appendChild(tile);
@@ -504,11 +504,11 @@ Game.prototype.keyboardListener = function() {
     
     this.sizeUp();
    
-    let goalSprite = this.placeSprite('goal', 'bunch.png');
+    let goalSprite = this.placeSprite('goal', 'images/bunch.png');
     this.goal.el = goalSprite;
     
     // we want the DOM element that gets returned...
-    let playerSprite = this.placeSprite('player', 'pec.png');
+    let playerSprite = this.placeSprite('player', 'images/pec.png');
    
     // ..so we can store it in the playerSprite element.
     this.player.el = playerSprite;
