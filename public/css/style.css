@@ -154,11 +154,13 @@
    */
   
   .default .floor {
-    background-color: lightgrey;
+    background-color: lightgreen;
   }
   
   .default .wall {
-    background-color: skyblue;
+    background-color: lightgreen;
+    background-image: url("tuhree.png");
+    background-size: 64px;
   }
   /*
    * grassland theme  
@@ -170,7 +172,8 @@
     background-color: #806d51;
   }
   .grassland #player {
-   background-color: #b2ccec;
+    background-image: url("pec.png");
+   /* background-color: #b2ccec; */
   }
   
   /* 
@@ -183,32 +186,48 @@
     background-color: #9c649c;
   }
   .dungeon #player {
-   background-color: #ab1431;
+    background-image: url("pec.png");
+   /* background-color: #ab1431; */
   }
   /*
    * player and goal are slightly smaller than tiles
    */
-  .player, 
+  .player {
+    transform-origin: center;
+    transform:scale(0.85);
+  }
+
   .goal {
     transform-origin: center;
-    /* transform:scale(0.85); */
+    transform:scale(.85);
   }
   /*
    * Goal colors
    */
   .goal {
+    background-image: url("bunch.png");
+    background-size: 64px;
+    /* background-repeat: no-repeat;
     background-color: #FFD700;
-    border: 1px solid #98720b;
+    border: 1px solid #98720b; */
   }
   /*
    *  Player default colors
    */
   .player {
-    background-image: url(././images/pec.png);
-    /* background-color: #90ee90; */
-    border: 1px solid #008000;
-    transition: left 0.2s ease, top 0.2s ease;
+    /* background-image: url("pec.png");*/
+    background-size: 64px;
+    /* background-color: #000000;
+    border: 1px solid #008000; */
+    transition: left 0.2s ease, top 0.2s ease; 
   }
+
+  .wall.collide{
+      animation: wobble 0.5s;
+      animation-iteration-count: infinite;
+      transition: background-color 0.2s;
+  }
+
   /*
    * Player wobbles when colliding with wall or border
    */
@@ -216,9 +235,7 @@
     animation: wobble 0.5s;
     animation-iteration-count: infinite;
     transition: background-color 0.2s;
-    
   }
-  
   /* 
    * Wobble animation
    */

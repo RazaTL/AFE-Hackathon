@@ -10,25 +10,25 @@ let app = {};
   let levels = [];
   levels[0] = {
     map:[
-       [1,1,0,0,1,1,1,1,1,1],
-       [1,0,0,0,0,1,1,1,1,1],
-       [0,0,1,1,0,1,1,1,1,1],
-       [1,0,1,1,0,1,1,1,1,1],
-       [0,1,0,1,0,1,1,1,1,1],
-       [0,0,0,1,0,1,1,1,1,1],
-       [0,0,0,1,0,1,1,1,1,1],
-       [0,0,0,1,0,1,1,1,1,1],
-       [0,0,0,1,0,1,1,1,1,1],
-       [0,0,0,1,0,1,1,1,1,1],
+       [1,1,1,1,1,1,1,1,1,1],
+       [0,0,0,0,0,1,0,0,0,0],
+       [0,1,1,1,0,1,0,1,1,1],
+       [0,1,0,1,0,1,0,0,0,1],
+       [0,1,0,1,0,1,1,1,0,1],
+       [0,0,0,1,0,1,1,1,0,1],
+       [1,1,1,1,0,1,1,1,0,1],
+       [1,1,1,1,0,1,1,1,0,1],
+       [1,1,1,1,0,0,0,0,0,1],
+       [1,1,1,1,1,1,1,1,1,1],
     ],
   
     player:{
-        x:0,
-        y:4
+        x:9,
+        y:1
     },
     goal:{
-        x:4,
-        y:1
+        x:2,
+        y:3
     },
     theme:'default',
   };
@@ -41,7 +41,7 @@ let app = {};
        [0,0,0,1,1,0],
        [0,1,0,1,0,0]
     ],
-    theme:'grassland',
+    theme:'default',
     player:{
         x:2,
         y:4
@@ -60,7 +60,7 @@ let app = {};
        [1,0,0,1,0,1,0],
        [1,1,0,0,1,0,0]
     ],
-    theme:'dungeon',
+    theme:'default',
     player:{
         x:2,
         y:4
@@ -86,7 +86,7 @@ function Game(id,level) {
   
   // establish the basic properties common to all this objects.
   this.tileTypes = ['floor','wall'];
-  this.tileDim = 32;
+  this.tileDim = 64; // sets tile dimension
   // inherit the level's properties: map, player start, goal start.
   this.map = level.map;
   
@@ -127,6 +127,27 @@ Game.prototype.createEl = function(x,y,type) {
   return el;
 }
 
+Game.prototype.createEl_player = function(x,y,type,img) {
+    // create one tile.
+   let el = document.createElement('div');
+        
+   // two class names: one for tile, one or the tile type.
+   el.className = type;
+   
+   // set width and height of tile based on the passed-in dimensions.
+   el.style.width = el.style.height = this.tileDim + 'px';
+   
+   // set left positions based on x coordinate.
+   el.style.left = x*this.tileDim + 'px';
+   
+   // set top position based on y coordinate.
+   el.style.top = y*this.tileDim + 'px';
+
+   el.style.backgroundImage = 'url(' + img + ')';
+       
+   return el;
+ }
+
 /*
  * Applies the level theme as a class to the game element. 
  * Populates the map by adding tiles and sprites to their respective layers.
@@ -150,7 +171,7 @@ Game.prototype.populateMap = function() {
        let tileType = this.tileTypes[tileCode];
       
        // call the helper function
-       let tile = this.createEl(x,y,tileType);
+       let tile = this.createEl_player(x,y,tileType,'tuhree.png');
        
        // add to layer
        tiles.appendChild(tile);
@@ -162,7 +183,7 @@ Game.prototype.populateMap = function() {
  * Place the player or goal sprite.
  * @param {String} type - either 'player' or 'goal', used by createEl and becomes DOM ID
  */
-Game.prototype.placeSprite = function(type) {
+Game.prototype.placeSprite = function(type, img) {
   
   // syntactic sugar
   let x = this[type].x
@@ -170,12 +191,12 @@ Game.prototype.placeSprite = function(type) {
   let y = this[type].y;
   
   // reuse the createTile function
-  let sprite  = this.createEl(x,y,type);
+  let sprite  = this.createEl_player(x,y,type,img);
   
   sprite.id = type;
   
   // set the border radius of the sprite.
-  sprite.style.borderRadius = this.tileDim + 'px';
+  // sprite.style.borderRadius = this.tileDim + 'px';
   
   // get half the difference between tile and sprite.
   
@@ -202,6 +223,8 @@ Game.prototype.collide = function() {
   return 0;
   
 };
+
+
 /*
  * Moves the player sprite left.
  */
@@ -302,7 +325,7 @@ Game.prototype.movePlayer = function(event) {
       return;
     }
 
-    switch (event.keyCode) { 
+    switch (event.keyCode) {
       case 37:
       this.moveLeft();
       break;
@@ -481,10 +504,11 @@ Game.prototype.keyboardListener = function() {
     
     this.sizeUp();
    
-    this.placeSprite('goal');
+    let goalSprite = this.placeSprite('goal', 'bunch.png');
+    this.goal.el = goalSprite;
     
     // we want the DOM element that gets returned...
-    let playerSprite = this.placeSprite('player');
+    let playerSprite = this.placeSprite('player', 'pec.png');
    
     // ..so we can store it in the playerSprite element.
     this.player.el = playerSprite;
