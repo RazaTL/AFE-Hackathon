@@ -1,6 +1,7 @@
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
+// const {move} = require("./public/js/utilities");
 
 const PORT = process.env.PORT || 3000;
 
@@ -11,6 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/api", (req, res) => {
   const { units, direction } = req.body;
+  // move(units, direction);
   const speakOutput = `FROM GAME: Moving: ${units}, ${direction}`;
   res.json({ received: JSON.stringify({ units, direction }), speakOutput });
 })
