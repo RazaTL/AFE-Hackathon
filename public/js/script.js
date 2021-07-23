@@ -1,6 +1,5 @@
 let app = {};
 
-
 (function(context) {
 
   /*
@@ -101,6 +100,11 @@ function Game(id,level) {
   
   // make a copy of the goal.
   this.goal = {...level.goal};
+
+  this.player.oldx = this.player.x;
+
+  this.player.oldy = this.player.y;
+  // this.pos.y = level.player;
 }
 
 /*
@@ -144,6 +148,10 @@ Game.prototype.createEl_player = function(x,y,type,img) {
    el.style.top = y*this.tileDim + 'px';
 
    el.style.backgroundImage = 'url(' + img + ')';
+
+   //el.pos.x = x;
+
+   //el.pos.y = y;
        
    return el;
  }
@@ -240,6 +248,8 @@ Game.prototype.moveLeft = function() {
     // if next tile is a wall, add collide effect and return
     if (nextTile ==1) {
         this.collide();
+        console.log("I should be at " + this.player.oldx + "," + this.player.oldy + " but I am at " + this.player.x + "," + this.player.y);
+        str = "oopsie woopsie i made a fucky wucky";
         return;
     }
     // change coordinates of player object
@@ -318,31 +328,31 @@ Game.prototype.updateHoriz = function() {
 /*
  * Moves player based on keyboard cursor presses.
  */
-// Game.prototype.movePlayer = function(event) {
-//     event.preventDefault();
+Game.prototype.movePlayer = function(event) {
+    event.preventDefault();
     
-//     if (event.keyCode < 37 || event.keyCode > 40) {
-//       return;
-//     }
+    if (event.keyCode < 37 || event.keyCode > 40) {
+      return;
+    }
 
-//     switch (event.keyCode) {
-//       case 37:
-//       this.moveLeft();
-//       break;
+    switch (event.keyCode) {
+      case 37:
+      this.moveLeft();
+      break;
       
-//       case 38:       
-//       this.moveUp();
-//       break;
+      case 38:       
+      this.moveUp();
+      break;
 
-//       case 39:
-//       this.moveRight();
-//       break;
+      case 39:
+      this.moveRight();
+      break;
         
-//       case 40:
-//       this.moveDown();
-//       break;
-//     }
-//  }
+      case 40:
+      this.moveDown();
+      break;
+    }
+ }
 /*
  * Check on whether goal has been reached.
  */
