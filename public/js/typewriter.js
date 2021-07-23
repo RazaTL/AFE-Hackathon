@@ -1,7 +1,7 @@
 var p = document.getElementById('text');
 p.innerHTML = '';
 var n = 0;
-var str = "Class Peccy:\n    def move():\n      while True:\n         move()";
+var str = "Class Peccy:\n    def move():\n      while True:\n         move()\n  pec = Peccy()\n  pec.move()";
 console.log(str);
 var typeTimer = setInterval(function loop1() {
   prev = str.length;
@@ -26,8 +26,8 @@ var typeTimer = setInterval(function loop1() {
         p.innerHTML = '';
         n = 0;
         clearInterval(typeTimer2);
-        typeTimer = setInterval(loop1, 69);
+        typeTimer = setInterval(loop1, 15);
       };
     }, 500);
 };
-}, 69)
+}, 15)

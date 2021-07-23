@@ -76,6 +76,37 @@ let app = {};
  *  @param {String} id - the id of the game container DOM element.
  *  @param {Object} level - the starting level of the game.
  */
+var YourThing = function Game(id,level) {
+  
+  this.el = document.getElementById(id);
+  
+  // level addition
+  this.level_idx = 0;
+  
+  // establish the basic properties common to all this objects.
+  this.tileTypes = ['floor','wall'];
+  this.tileDim = 64; // sets tile dimension
+  // inherit the level's properties: map, player start, goal start.
+  this.map = level.map;
+  
+  // level switch
+  this.theme = level.theme;
+  
+  // make a copy of the level's player.
+  this.player = {...level.player};
+  
+  // create a property for the DOM element, to be set later.
+  this.player.el = null;
+  
+  // make a copy of the goal.
+  this.goal = {...level.goal};
+
+  this.player.oldx = this.player.x;
+
+  this.player.oldy = this.player.y;
+  // this.pos.y = level.player;
+}
+
 function Game(id,level) {
   
   this.el = document.getElementById(id);
@@ -249,7 +280,6 @@ Game.prototype.moveLeft = function() {
     if (nextTile ==1) {
         this.collide();
         console.log("I should be at " + this.player.oldx + "," + this.player.oldy + " but I am at " + this.player.x + "," + this.player.y);
-        str = "oopsie woopsie i made a fucky wucky";
         return;
     }
     // change coordinates of player object
@@ -280,6 +310,7 @@ Game.prototype.moveUp = function() {
  * Moves the player sprite right.
  */
 Game.prototype.moveRight = function()  {
+  console.log("HELLO IM RUNNING");
    if (this.player.x == this.map[this.player.y].length-1) {
         this.collide();
         return;
@@ -331,11 +362,47 @@ Game.prototype.updateHoriz = function() {
 Game.prototype.movePlayer = function(event) {
     event.preventDefault();
     
-    if (event.keyCode < 37 || event.keyCode > 40) {
+    if (event.keyCode < 37 || event.keyCode > 57) {
       return;
     }
 
     switch (event.keyCode) {
+      case 49:
+      str = "Hmm, that's not quite correct, we don't want Peccy to get lost in the forest. How can we make sure Peccy only moves as far as we want him to?";
+      break;
+
+      case 50:
+      str = "Class Peccy:\n    def move(steps):\n      for i = 0 < steps:\n         move.left()\n         i++\n  pec = Peccy()\n  pec.move(3)";
+      break;
+
+      case 51:
+      str = "It seems like we're stuck! Peccy can only move left, how would you try and tell him to move in a different direction?";
+      break; 
+
+      case 52:
+      str = "Class Peccy:\n    def move(steps, direction):\n      for i = 0 < steps:\n         move.direction()\n         i++\n  pec = Peccy()\n  pec.move(2, down)";
+      break; 
+
+      case 53:
+      str = "pec = Peccy()\npec.move(2, right)\npec.move(5,down)\npec.move(4, left)\npec.move(8, up)";
+      break; 
+
+      case 54:
+      str = "Hmm, that's not quite correct, we don't want Peccy to get lost in the forest.";
+      break;
+
+      case 55:
+      str = "pec = Peccy()\npec.move(7, up)\npec.move(4,left)\npec.move(4,down)\npec.move(2,right)\npec.move(2,up)";
+      break;
+
+      case 56:
+      str = "Great job getting the Professor Peccy to the Bananas!!!";
+      break;
+
+      case 57:
+      str = "For loops are used to repeat a section of code a specific number of times. Would you like to walk through an auditory for loop demonstration?";
+      break;
+      
       case 37:
       this.moveLeft();
       break;
