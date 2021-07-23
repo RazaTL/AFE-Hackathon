@@ -318,31 +318,31 @@ Game.prototype.updateHoriz = function() {
 /*
  * Moves player based on keyboard cursor presses.
  */
-Game.prototype.movePlayer = function(event) {
-    event.preventDefault();
+// Game.prototype.movePlayer = function(event) {
+//     event.preventDefault();
     
-    if (event.keyCode < 37 || event.keyCode > 40) {
-      return;
-    }
+//     if (event.keyCode < 37 || event.keyCode > 40) {
+//       return;
+//     }
 
-    switch (event.keyCode) {
-      case 37:
-      this.moveLeft();
-      break;
+//     switch (event.keyCode) {
+//       case 37:
+//       this.moveLeft();
+//       break;
       
-      case 38:       
-      this.moveUp();
-      break;
+//       case 38:       
+//       this.moveUp();
+//       break;
 
-      case 39:
-      this.moveRight();
-      break;
+//       case 39:
+//       this.moveRight();
+//       break;
         
-      case 40:
-      this.moveDown();
-      break;
-    }
- }
+//       case 40:
+//       this.moveDown();
+//       break;
+//     }
+//  }
 /*
  * Check on whether goal has been reached.
  */
